@@ -1140,4 +1140,292 @@ CSS像素
 
 社区为了解决CSS面临的大量问题，出现了一系列的CSS预处理器（CSS_preprocessor）
 
-CSS预处理器是一个
+- CSS预处理器是一个能让你通过预处理器自己独有的语法来生成CSS的程序
+- 代码最终会转换为CSS来运行，因为浏览器只识别css
+
+常见的css预处理器
+
+- Sass/Scss
+- Less
+- Stylus
+
+#### Less
+
+Less(learner Style Sheets的缩写)，是一门css扩展语言，并且兼容css
+
+- less增加了很多 相比于css更好的用的特性
+- 比如定义变量，混入，嵌套，计算等
+- less最终需要被编译成CSS运行于浏览器中（包括部署到服务器中）
+
+##### 编写Less代码
+
+###### less语法-变量和嵌套
+
+```less
+@mainColor:#f00;  // @变量名：变量值
+
+.box{
+    color:@mainColor;
+    .desc{
+        font-size:12px;   // 嵌套
+    }
+    &:hover{
+        color:#fff;
+    }  // &表示当前选择器的父级
+}
+```
+
+###### less语法-混合(Mixins)
+
+在原来的CSS编写中，多个选择器中可能会有大量相同的代码
+
+我们希望可以将这些代码抽取到一个独立的地方，任何选择器都可以进行复用
+
+less提供了混入，可以完成这样的操作
+
+混合(Mixin)是一种将一组属性从一个规则集(或混入)到另一个规则集的方法
+
+```less
+.bordered{
+    border-top:1px solid #f00;
+    border-bottom:2px solid blue;
+}
+
+.box{
+    height:100px;
+    color:#000;
+    
+    .bordered()
+}
+```
+
+混入也可以传入变量
+
+```less
+.bordered(@borderWidth:2px){
+    border-top:@borderWidth solid #f00;
+    border-bottom:borderWidt dotted blue;
+    
+}
+```
+
+###### Less语法：映射(Maps)
+
+```less
+.colors(){
+    primaryColor:#f00;
+    secondColor:#0f0;
+}
+
+.box{
+    width:100px;
+    height:100px;
+    color:.colors[primaryColor];
+    background-color:.colors[secondColor];
+}
+```
+
+混入和映射结合：混入也可以当做一个自定义函数来使用
+
+```less
+.pxToRem(@px){
+    result:(@px / @htmlFontSize) * 1rem
+}
+.box{
+    width:.pxToRem(100)[result];
+    font-size:.pxToRem(18)[result];
+}
+```
+
+## 移动端适配
+
+### 什么是移动端适配
+
+因为目前移动端设备较多，所以我们需要对其进行一些适配
+
+这里有两个概念
+
+- 自适应：根据不同的设备屏幕大小来自动调整尺寸，大小
+- 响应式：会随着屏幕的实时变动而自动调整，是一种自适应
+
+### 视口(viewport)
+
+在一个浏览器中，我们可以看到的区域就是视口
+
+**在pc端页面中，布局视口和视觉视口是同一个**
+
+在移动端，布局视口和可见视口是不太一样的
+
+这是因为移动端的网页窗口往往比较小，我们可能会希望一个大的网页在移动端可以完整显示，**所以默认情况下，移动端的布局视口是大于视觉视口的**
+
+在移动端，我们可以将视口划分为三种情况
+
+- 布局视口（layout viewport）
+- 视觉视口（visual layout）
+- 理想视口（ideal layout）
+
+##### 布局视口
+
+默认情况下，一个pc端的网页在移动端会如何显示呢？
+
+第一：它会按照宽度为980px来布局一个页面的盒子和内容
+
+第二：为了显示可以完整的显示在页面中，对整个页面进行缩小
+
+我们相对于980px布局的这个视口，称之为布局视口
+
+布局视口的默认宽度是980px
+
+
+
+##### 视觉视口
+
+如果默认情况下，我们按照980px显示内容，那么右侧有一部分区域就会无法显示，所以手机端浏览器会默认对页面进行缩放以显示到用户的可见区域中
+
+那么显示在可见区域的这个视口，就是视觉视口
+
+![image-20220913233616150](C:\Users\10244\AppData\Roaming\Typora\typora-user-images\image-20220913233616150.png)
+
+##### 理想视口
+
+如果所有的网页都按照980px在移动端布局，那么最终页面都会被缩放显示
+
+事实上这种方式是不利于我们进行移动端开发的，我们希望设置100px，那么显示的就是100px
+
+要做到这一点可以通过设置理想视口来实现
+
+理想视口
+
+默认情况下的layout viewport并不适合我们进行布局
+
+我们可以对layout viewport进行宽度和缩放的设置，以满足正常在一个移动端窗口的布局
+
+这个时候可以设置meta中的viewport
+
+![image-20220913234022069](C:\Users\10244\AppData\Roaming\Typora\typora-user-images\image-20220913234022069.png)
+
+```html
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+```
+
+#### 移动端适配方案
+
+移动端的屏幕尺寸通常是非常繁多的，很多时候我们希望在不同的屏幕尺寸上显示不同的大小
+
+这个时候我们需要一些方案来处理尺寸
+
+##### 1、百分比设置
+
+ 因为不同属性的百分比值，相对的可能是不同参照物，所以百分比往往很难统一
+
+所以百分比在移动端适配中使用是非常少的
+
+##### 2、rem单位+动态html的font-size
+
+rem单位是相对于html元素的font-size来设置的，那么我们需要在不同的屏幕下有不同的尺寸，可以动态的修改html的font-size
+
+比如如下案例
+
+1、设置一个盒子的宽度是2rem
+
+2、设置不同屏幕上html的font-size
+
+![image-20220914211110856](C:\Users\10244\AppData\Roaming\Typora\typora-user-images\image-20220914211110856.png)
+
+这样在开发中，我们只需要考虑两个问题
+
+1、针对不同的屏幕，设置html不同的font-size
+
+2、将原来设置的尺寸，转化成rem单位
+
+ rem的font-size尺寸
+
+方案一：媒体查询
+
+可以通过媒体查询来设置不同尺寸范围内的屏幕html的font-size
+
+缺点：1、我们需要针对不同屏幕编写大量的媒体查询2、如果动态改变尺寸，不会实时进行更新
+
+```css
+@media screen and (min-width: 320px) {
+      html {
+        font-size: 20px;
+      }
+    }
+    
+    @media screen and (min-width: 375px) {
+      html {
+        font-size: 24px;
+      }
+    }
+
+    @media screen and (min-width: 414px) {
+      html {
+        font-size: 28px;
+      }
+    }
+    
+    @media screen and (min-width: 480px) {
+      html {
+        font-size: 32px;
+      }
+    }
+
+    .box {
+      width: 5rem;
+      height: 5rem;
+      background-color: orange;
+    }
+```
+
+方案二 编写js代码
+
+如果希望实时改变屏幕尺寸，font-size也可以实时更改，可以通过js代码
+
+方法：1、根据html的宽度计算处font-size的大小，并且设置搭配html上
+
+​            2、监听页面的实时改变，并且重新设置font-size的大小到html上
+
+```javascript
+// 1.获取html的元素
+const htmlEl = document.documentElement
+
+function setRemUnit() {
+  // 2.获取html的宽度(视口的宽度)
+  const htmlWidth = htmlEl.clientWidth
+  // 3.根据宽度计算一个html的font-size的大小
+  const htmlFontSize = htmlWidth / 10
+  // 4.将font-size设置到html上
+  htmlEl.style.fontSize = htmlFontSize + "px"
+}
+// 保证第一次进来时, 可以设置一次font-size
+setRemUnit()
+
+// 当屏幕尺寸发生变化时, 实时来修改html的font-size
+window.addEventListener("resize", setRemUnit)
+```
+
+方案三 lib-flexible库
+
+该方法和方案二本质一样
+
+##### 3、vw单位
+
+vw和rem的比较
+
+vw的优势
+
+1、不需要去计算html的font-size大小。也不需要给html设置这样一个font-szie
+
+2、不会因为设置html的font-size大小，而必须给body再设置一个font-size，防止继承
+
+3、因为不依赖font-size的尺寸，所以不用担心某些因html的font-size尺寸被篡改，页面尺寸混乱
+
+4、vw相比rem更加语义化，1vw是1/100的viewp的大小
+
+5.可以具备rem之前所有的优点
+
+
+
+##### 4、flex的弹性布局
+
