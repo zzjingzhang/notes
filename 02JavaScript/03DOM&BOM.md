@@ -2,7 +2,7 @@
 
 window全局对象
 
-![](C:\Users\10244\Desktop\前端\notes\02JavaScript\window全局对象.png)
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\06window全局对象.png" style="zoom:60%;" />
 
 ## DOM
 
@@ -32,7 +32,7 @@ DOM 文档对象模型(Document Object Model)
 
 在抽象成DOM对象的时候，他们也会形成一个树结构，我们称之为DOM Tree
 
-<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\DOMTree.png" style="zoom:60%;" />
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\07DOMTree.png" style="zoom:60%;" />
 
 ### DOM的继承关系图
 
@@ -42,7 +42,7 @@ DOM 文档对象模型(Document Object Model)
 
 **类型之间有如下的继承关系**
 
-<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\DOM的继承关系图.png" style="zoom:60%;" />
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\08DOM的继承关系图.png" style="zoom:60%;" />
 
 ### document对象
 
@@ -74,7 +74,7 @@ head元素：<head> = document.head
 - 第一个子节点：firstChild
 - 第二个子节点：lastChild
 
-<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\节点之间的关系.png" style="zoom:60%;" />
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\09节点之间的关系.png" style="zoom:67%;" />
 
 ### 元素之间的导航
 
@@ -89,7 +89,7 @@ head元素：<head> = document.head
 - 第一个子元素：firstElementChild
 - 第二个子元素：lastElementChild
 
-<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\元素之间的关系.png" style="zoom:60%;" />
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\10元素之间的关系.png" style="zoom:60%;" />
 
 ### 表格元素的导航
 
@@ -269,7 +269,7 @@ node.after(...nodes or strings)---在node后面插入节点或字符串
 node.replaceWith(...nodes or strings)---将node替换为给定节点或字符串
 ```
 
-<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\插入元素.png" style="zoom:60%;" />
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\11插入元素.png" style="zoom:60%;" />
 
 ### 移除和克隆元素
 
@@ -291,7 +291,7 @@ var cloneBoxEl = boxEl.cloneNode(true)
 
 ### 元素的大小、滚动
 
-![](C:\Users\10244\Desktop\前端\notes\02JavaScript\元素的大小、滚动.png)
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\12元素的大小、滚动.png" style="zoom:60%;" />
 
 ### window的大小、滚动
 
@@ -379,7 +379,7 @@ transitioned --- 当一个css动画完成时
 - 但是他们采用了完全相反的事件流来对事件进行了传递
 - IE采用了事件冒泡的方式，Netscape采用了事件捕获的方式
 
-![](C:\Users\10244\Desktop\前端\notes\02JavaScript\事件冒泡和事件捕获.png)
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\13事件冒泡和事件捕获.png" style="zoom:60%;" />
 
 #### 事件捕获和冒泡的过程
 
@@ -401,7 +401,7 @@ transitioned --- 当一个css动画完成时
 
 eventPhase
 
-<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\事件冒泡和捕获的过程.png" style="zoom:60%;" />
+<img src="C:\Users\10244\Desktop\前端\notes\02JavaScript\images\14事件冒泡和捕获的过程.png" style="zoom:60%;" />
 
 #### 事件对象
 
