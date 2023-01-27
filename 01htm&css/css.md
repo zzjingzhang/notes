@@ -499,7 +499,7 @@ scale函数是scaleX 和scaleY的缩写
 transform-origin:top left
 ```
 
-![image-20220912125259154](C:\Users\10244\AppData\Roaming\Typora\typora-user-images\image-20220912125259154.png)
+<img src="C:\Users\10244\Desktop\前端\notes\01htm&css\skew.png" style="zoom:60%;" />
 
 ##### 倾斜-skew
 
@@ -690,7 +690,7 @@ animation属性是animation-name，animation-duration，animation-timing-functio
 
 2.有图片，有文字时，line-boxes如何包裹内容
 
-![image-20220912160933463](C:\Users\10244\AppData\Roaming\Typora\typora-user-images\image-20220912160933463.png)
+![01](C:\Users\10244\Desktop\前端\notes\01htm&css\01.png)
 
 3.有图片，有文字，有inline-block(比图片要大)如果包裹内容
 
