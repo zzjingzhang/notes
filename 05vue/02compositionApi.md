@@ -214,3 +214,115 @@ const changeInfo =()=>{
 }
 ```
 
+#### `watch/watchEffect`
+
+`watchEffect`：用于自动收集响应式数据的依赖
+
+`watch`：需要手动指定侦听的数据源
+
+```js
+const name=ref('abc')
+watch(name,(newValue,oldValue)=>{
+    console.log(newValue,oldValue);
+})
+const changeName=()=>{
+    name.value='cba'
+}
+```
+
+侦听多个数据源
+
+侦听器还可以使用数组同时侦听多个源
+
+```js
+const name=ref('abc')
+const age=ref(18)
+watch([name,age],(newValues,oldValues)=>{
+    console.log(newValues,oldValues);
+})
+const changeName=()=>{
+    name.value='cba'
+}
+```
+
+##### `watchEffect`
+
+当侦听到某些数据变化时，我们希望执行某些操作，这个时候可以使用`watchEffect`
+
+首先：`watchEffect`传入的函数会被立即执行一次，并且在执行的过程中会收集依赖
+
+其次：只有收集的依赖发生变化时，`watchEffect`传入的函数才会再次执行
+
+```js
+const name=ref('abc')
+const age =ref(18)
+watchEffect(()=>{
+    console.log('watchEffect执行',name.value,age.value)
+})
+```
+
+`watchEffect`的停止侦听
+
+如果在某些情况下，我们希望停止侦听，这个时候我们可以获取watchEffect的返回值函数，调用该函数即可
+
+```js
+const name=ref('abc')
+const age =ref(18)
+const stopWatch =watchEffect(()=>{
+    console.log('watchEffect执行',name.value,age.value)
+})
+const changeAge=()=>{
+    age.value++
+    if(age.value >20){
+        stopWatch()
+     }
+}
+
+```
+
+#### script setup语法糖
+
+\<script setup\>是在单文件组件`(SFC)`中使用组合式`API`的编译语法糖，当同时使用`SFC`与组合式`API`时则推荐该语法
+
+使用这个语法，需要将setup attitude添加到script标签上
+
+```html
+<script setup>
+    console.log('abc')
+</script>
+```
+
+里面的代码会被编译成组件setup()函数的内容
+
+这意味着与普通的script只在组件被首次引入的时候执行一次不同，\<script setup\>中的代码会在每次组件实例创建的时候执行
+
+##### 顶层的绑定会被暴露给模板
+
+当使用\<script setup\>的时候，任何在\<script setup\>声明的顶层的绑定（包括变量，函数声明，以及import引入的内容）都能在模板中直接使用使用
+
+##### `defineProps()和defineEmits()`
+
+为了声明props和emits选项时获得完整的类型推断支持，我们可以使用`defineProps()和defineEmits()api`，它们将自动在\<script setup\>中可用
+
+##### `defineExpose()`
+
+使用\<script setup\>的组件是默认关闭的
+
+通过模板ref或者$parent链获取到的组件的公开实例，不会暴露任何在\<script setup\>中声明的绑定
+
+通过`defineExpose`编译器宏来显示指定在\<script setup\>组件中要暴露出去的property
+
+```js
+// 子组件
+function foo(){
+    console.log('foo')
+}
+defineExpose({foo})
+
+// 父组件
+const showInfoRef = ref(null)
+function callShowInfo(){
+    showInfoRef.value.foo()
+}
+```
+
